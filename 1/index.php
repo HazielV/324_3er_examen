@@ -1,4 +1,15 @@
-<?php include('db.php'); ?>
+<?php
+include('db.php');
+session_start();
+
+// Verificar si hay una sesión activa y si el usuario es 'admin'
+if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'supervisor') {
+    // Si el usuario no es 'admin', redirige a una página de error o login
+    header('Location: consultar.php');  // Puedes cambiar la redirección
+    exit(); // Termina la ejecución del script
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +18,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitudes de Vacaciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,6 +65,7 @@
             </tbody>
         </table>
     </div>
+    <a href="logout.php" class="btn btn-danger logout-btn">Cerrar Sesión</a>
 </body>
 
 </html>
